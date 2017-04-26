@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
-from menu.views import HomeView, MobileView
+
+from django_tree import settings
+from menu.views import HomeView, MobileView, ComputerView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^mobile/', MobileView.as_view(), name='home'),
-]
+    url(r'^mobile/', MobileView.as_view(), name='mobile'),
+    url(r'^computer/', ComputerView.as_view(), name='computer'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

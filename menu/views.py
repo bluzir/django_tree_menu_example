@@ -8,3 +8,7 @@ class HomeView(TemplateView):
 
 class MobileView(TemplateView):
     template_name = 'mobile.html'
+
+
+class ComputerView(TemplateView):
+    template_name = 'computers.html'

@@ -6,8 +6,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('template_tags/menu.html')
-def show_menu(slug):
-    print(slug)
+def draw_menu(slug):
     menu = Menu.objects.prefetch_related('items__items').get(slug=slug)
     return {'menu': menu}
 
