@@ -22,7 +22,5 @@ from menu.views import HomeView, MobileView, ComputerView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^mobile/', MobileView.as_view(), name='mobile'),
-    url(r'^computer/', ComputerView.as_view(), name='computer'),
+    url(r'^', HomeView.as_view(), name='home'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -47,14 +47,14 @@ class MenuItem(BaseAbstractModel):
         verbose_name_plural = 'пункты меню'
         ordering = ('order', )
 
-    def get_full_url(self):
+    def get_full_path(self):
         url = '{}/'.format(self.slug)
         parent = self.parent
         while parent:
             url = '{}/{}'.format(parent.slug, url)
             parent = parent.parent
-        full_url = '/{}'.format(url)
-        return full_url
+        full_path = '/{}'.format(url)
+        return full_path
 
     def __str__(self):
         return self.title
