@@ -5,6 +5,7 @@ class BaseAbstractModel(models.Model):
     is_visible = models.BooleanField(default=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
+    order = models.IntegerField(default=10)
 
     class Meta:
         abstract = True
@@ -25,14 +26,18 @@ class Menu(BaseAbstractModel):
 class MenuParentItem(BaseAbstractModel):
     menu = models.ForeignKey(Menu, related_name='items', verbose_name='меню')
     title = models.CharField(max_length=100, verbose_name='Название пункта')
-    slug = models.SlugField(max_length=255, verbose_name='Ссылка')
+    slug = models.SlugField(max_length=255, verbose_name='Ссылка', blank=True)
 
     class Meta:
         verbose_name = 'родительский пункт меню'
         verbose_name_plural = 'родительские пункты меню'
+        ordering = ('order', )
 
     def get_full_url(self):
-        url = '{}'.format(self.slug)
+        if self.slug:
+            url = '/{}/'.format(self.slug)
+        else:
+            url = '/'
         return url
 
     def __str__(self):
@@ -47,6 +52,7 @@ class MenuChildItem(BaseAbstractModel):
     class Meta:
         verbose_name = 'дочерний пункт меню'
         verbose_name_plural = 'дочерние пункты меню'
+        ordering = ('order', )
 
     def get_full_url(self):
         parent_slug = self.parent.slug

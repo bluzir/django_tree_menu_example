@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from menu.views import HomeView
+from menu.views import HomeView, MobileView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', HomeView.as_view(), name='home')
+    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^mobile/', MobileView.as_view(), name='home'),
 ]
