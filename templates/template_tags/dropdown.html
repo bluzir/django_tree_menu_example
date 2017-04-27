@@ -3,14 +3,14 @@
 <ul class="dropdown-menu">
     {% for item in item.items.all %}
         {% if item.items.all %}
-            <li class="dropdown-submenu {% is_nav_active item.get_full_path %}"
+            <li class="dropdown-submenu {% is_nav_active item.get_url %}"
             >
-                <a href="{{ item.get_full_path }}" class="dropdown-toggle" data-toggle="dropdown">{{ item.title }}</a>
+                <a href="{{ item.get_url }}" class="dropdown-toggle" data-toggle="dropdown">{{ item.title }}</a>
                 {% draw_dropdown item %}
             </li>
         {% else %}
-            <li class="{% is_nav_active item.get_full_path %}">
-                <a href="{{ item.get_full_path }}">{{ item.title }}</a>
+            <li class="{% is_nav_active item.get_url %}">
+                <a href="{{ item.get_url }}">{{ item.title }}</a>
             </li>
         {% endif %}
     {% endfor %}
