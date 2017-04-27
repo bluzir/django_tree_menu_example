@@ -6,9 +6,5 @@ class HomeView(TemplateView):
     template_name = 'home.html'
 
 
-class MobileView(TemplateView):
-    template_name = 'mobile.html'
-
-
-class ComputerView(TemplateView):
-    template_name = 'computers.html'
+class BlogView(TemplateView):
+    template_name = 'blog.html'

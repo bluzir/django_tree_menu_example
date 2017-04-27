@@ -1,6 +1,7 @@
 from django import template
+from django.db.models import Prefetch
 
-from menu.models import Menu
+from menu.models import Menu, MenuItem
 
 register = template.Library()
 
