@@ -3,8 +3,12 @@ from django.urls import reverse
 
 
 class BaseAbstractModel(models.Model):
-    is_visible = models.BooleanField(default=True, verbose_name='видимость')
-    order = models.IntegerField(default=10, verbose_name='порядок')
+    """
+    Base abstract model.
+    Provides visibility settings, ordering, and created/updated field.
+    """
+    is_visible = models.BooleanField(default=True, verbose_name='Visibility')
+    order = models.IntegerField(default=10, verbose_name='Order')
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -13,9 +17,13 @@ class BaseAbstractModel(models.Model):
 
 
 class Menu(BaseAbstractModel):
-    title = models.CharField(max_length=20, verbose_name='Название меню')
-    slug = models.SlugField(max_length=255, verbose_name='Идентификатор', null=True,
-                            help_text='Используется для определения меню в templatetags')
+    """
+    Model for menu item. Has title and slug fields.
+    Slug is designed to use in templatetag 'draw menu' for displaying menu
+    """
+    title = models.CharField(max_length=20, verbose_name='Menu title')
+    slug = models.SlugField(max_length=255, verbose_name='Slug', null=True,
+                            help_text='Use it in templatetag for displaying menu')
 
     class Meta:
         verbose_name = 'меню'
@@ -29,13 +37,20 @@ class Menu(BaseAbstractModel):
 
 
 class MenuItem(BaseAbstractModel):
+    """
+    Model for menu item. Has menu, parent, title, url fields.
+    Menu field is only requied for top level items.
+    You can provide any item in parent field and it will become relative for this item.
+    If you'll use 'named url' field, get_url method will use it firstly to generate url. And only then 'url' field.
+    """
     menu = models.ForeignKey(Menu, related_name='items',
-                             verbose_name='меню', blank=True, null=True)
+                             verbose_name='menu', blank=True, null=True)
     parent = models.ForeignKey('self', blank=True, null=True,
-                               related_name='items', verbose_name='родительский пункт')
-    title = models.CharField(max_length=100, verbose_name='Название пункта')
-    url = models.CharField(max_length=255, verbose_name='Ссылка', blank=True)
-    named_url = models.CharField(max_length=255, verbose_name='Named URL', blank=True)
+                               related_name='items', verbose_name='parent menu item')
+    title = models.CharField(max_length=100, verbose_name='Item title')
+    url = models.CharField(max_length=255, verbose_name='Link', blank=True)
+    named_url = models.CharField(max_length=255, verbose_name='Named URL', blank=True,
+                                 help_text='Named url from your urls.py file')
 
     class Meta:
         verbose_name = 'пункт меню'
