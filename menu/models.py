@@ -26,8 +26,8 @@ class Menu(BaseAbstractModel):
                             help_text='Use it in templatetag for displaying menu')
 
     class Meta:
-        verbose_name = 'меню'
-        verbose_name_plural = 'меню'
+        verbose_name = 'menu'
+        verbose_name_plural = 'menu'
 
     def __str__(self):
         return self.title
@@ -53,8 +53,8 @@ class MenuItem(BaseAbstractModel):
                                  help_text='Named url from your urls.py file')
 
     class Meta:
-        verbose_name = 'пункт меню'
-        verbose_name_plural = 'пункты меню'
+        verbose_name = 'menu item'
+        verbose_name_plural = 'menu items'
         ordering = ('order', )
 
     def get_url(self):
