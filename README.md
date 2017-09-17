@@ -5,6 +5,7 @@
 * Easy to add to template
 * Optimized SQL
 * Bootstrap 3
+* Does not use third-party libraries
 
 ### How to use
 
@@ -16,7 +17,7 @@
 
 ![Menu items admin screenschot](https://i.imgur.com/gRu5ZAk.png)
 
-3. In begining of temolate add `{% load draw_menu %}`. 
+3. In begining of template add `{% load draw_menu %}`. 
 
 4. Add this where your menu should be in template `{% draw_menu 'main' %}`
 
