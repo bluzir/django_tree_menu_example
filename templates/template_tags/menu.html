@@ -1,25 +1,27 @@
 {% load draw_dropdown %}
 
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ menu.get_url }}">{{ menu.title }}</a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <a class="navbar-brand" href="{{ menu.get_full_path }}">{{ menu.title }}
+                {{ menu.get_url }}</a>
             <ul class="nav navbar-nav">
             {% with items=menu.items.all %}
                 {% for item in items %}
                     {% if item.items.all %}
-                        <li class="{% is_nav_active item.get_url %}">
-                            <a href="{{ item.get_url }}" class="dropdown-toggle"
-                               data-toggle="dropdown">{{ item.title }}<b class="caret"></b>
+                        <li class="nav-item dropdown">
+                            <a href="{{ item.get_url }}" class="nav-link dropdown-toggle"
+                               id="navbarDropdownMenuLink"
+                               data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                               {{ item.title }}
                             </a>
                             {% draw_dropdown item %}
                         </li>
                     {% else %}
-                        <li><a href="{{ item.get_url }}">{{ item.title }}</a></li>
+                        <li><a href="{{ item.get_url }}">?{{ item.title }}</a></li>
                     {% endif %}
                 {% endfor %}
             {% endwith %}
             </ul>
-        </div>
     </div>
 </nav>

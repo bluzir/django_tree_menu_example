@@ -1,17 +1,9 @@
 {% load draw_dropdown %}
 
-<ul class="dropdown-menu">
+<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
     {% for item in item.items.all %}
-        {% if item.items.all %}
-            <li class="dropdown-submenu {% is_nav_active item.get_url %}"
-            >
-                <a href="{{ item.get_url }}" class="dropdown-toggle" data-toggle="dropdown">{{ item.title }}</a>
-                {% draw_dropdown item %}
-            </li>
-        {% else %}
-            <li class="{% is_nav_active item.get_url %}">
-                <a href="{{ item.get_url }}">{{ item.title }}</a>
-            </li>
-        {% endif %}
+        <a class="dropdown-item">
+            <a href="{{ item.get_url }}">{{ item.title }}</a>
+        </a>
     {% endfor %}
-</ul>
+</div>

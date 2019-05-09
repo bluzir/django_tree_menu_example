@@ -24,6 +24,8 @@ class Menu(BaseAbstractModel):
     title = models.CharField(max_length=20, verbose_name='Menu title')
     slug = models.SlugField(max_length=255, verbose_name='Slug', null=True,
                             help_text='Use it in templatetag for displaying menu')
+    named_url = models.CharField(max_length=255, verbose_name='Named URL', blank=True,
+                                 help_text='Named url from your urls.py file')
 
     class Meta:
         verbose_name = 'menu'
@@ -33,7 +35,11 @@ class Menu(BaseAbstractModel):
         return self.title
 
     def get_full_path(self):
-        return '/{}/'.format(self.slug)
+        if self.named_url:
+            url = reverse(self.named_url)
+        else:
+            url = '/{}/'.format(self.slug)
+        return url
 
 
 class MenuItem(BaseAbstractModel):
@@ -41,12 +47,16 @@ class MenuItem(BaseAbstractModel):
     Model for menu item. Has menu, parent, title, url fields.
     Menu field is only requied for top level items.
     You can provide any item in parent field and it will become relative for this item.
-    If you'll use 'named url' field, get_url method will use it firstly to generate url. And only then 'url' field.
+    If you'll use 'named url' field, get_url method will use it firstly to generate url.
+    And only then 'url' field.
     """
     menu = models.ForeignKey(Menu, related_name='items',
-                             verbose_name='menu', blank=True, null=True)
+                             verbose_name='menu', blank=True, null=True,
+                             on_delete=models.CASCADE)
     parent = models.ForeignKey('self', blank=True, null=True,
-                               related_name='items', verbose_name='parent menu item')
+                               related_name='items',
+                               verbose_name='parent menu item',
+                               on_delete=models.CASCADE)
     title = models.CharField(max_length=100, verbose_name='Item title')
     url = models.CharField(max_length=255, verbose_name='Link', blank=True)
     named_url = models.CharField(max_length=255, verbose_name='Named URL', blank=True,
